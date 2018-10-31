@@ -110,32 +110,79 @@ public class Solution1 {
         }
         return min;
     }
-    
+
     /**
      * Permutation array is an array which goes from 1..N, uninterrupted.
+     *
      * @param A
-     * @return 
+     * @return
      */
-    public int permutation(int[] A){
+    public int permutation(int[] A) {
         Arrays.sort(A);
-        if((A.length == 1 && A[0] != 1) || A[0] < 0){
+        if ((A.length == 1 && A[0] != 1) || A[0] < 0) {
             return 0;
         }
-        for(int i = 0; i < A.length; i++){
-            if((i + 1) != A[i]){
+        for (int i = 0; i < A.length; i++) {
+            if ((i + 1) != A[i]) {
                 return 0;
             }
         }
         return 1;
     }
-    
-    public int frogRiverOne(int X, int[] A){
-        if(X < 1 || X > 100000){
+
+    public int frogRiverOne(int X, int[] A) {
+        if (X < 1 || X > 100000 || A.length == 0 || A.length > 100000 || A.length < X) {
             return -1;
         }
-        int[] leaves = new int[X];
-        for(int i = 0; i < A.length; i++){
-            
+        if (A[0] == X && A.length == 1) {
+            return 0;
         }
+        boolean[] leaves = new boolean[X + 1];
+        for (int i = 0; i < A.length; i++) {
+            if (!leaves[A[i]]) {
+                leaves[A[i]] = true;
+                X--;
+            }
+            if (X == 0) {
+                return i;
+            }
+        }
+        return -1;
     }
+
+    /**
+     *
+     * @param N = 0
+     * @param A = operations
+     * @return
+     */
+    public int[] counters(int N, int[] A) {
+        int setMax = 2, currMax = 3;
+        int[] counters = new int[N];
+        for (int i = 0; i < A.length; i++) {
+            // Increment
+            if (1 <= A[i] && A[i] <= N) {
+                counters[A[i] - 1] = counters[A[i] - 1] + 1;
+            } else if (A[i] == N + 1) {
+                // set all counters to max value of any counter
+                // Find max counter
+                // set setMax = max counter
+
+            }
+        }
+        if (setMax != 0) {
+            for (int i = 0; i < counters.length; i++) {
+                if (currMax == i) {
+                    continue;
+                }
+                if (counters[i] == 0) {
+                    counters[i] = setMax;
+                } else {
+                    counters[i] += setMax;
+                }
+            }
+        }
+        return counters;
+    }
+
 }
